@@ -16,6 +16,7 @@ export interface Product {
 }
 
 const ProductPosition = () => {
+  // Handle Product Filtering and set current product
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   const [currentProductNumber, setCurrentProductNumber] = useState("");
   const [currentProduct, setCurrentProduct] = useState<Product>({
@@ -31,29 +32,155 @@ const ProductPosition = () => {
     m3ProductStatus: 0,
   });
 
+  // Get filtered products from products array
   const onProductNumberSearchHandler = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
-    const current = products.filter((product) =>
+    const currentProducts = products.filter((product) =>
       product.productNumber.toLowerCase().includes(event.currentTarget.value)
     );
     setCurrentProductNumber(event.currentTarget.value);
-    setCurrentProducts(current);
+    setCurrentProducts(currentProducts);
   };
 
-  const onShortTextChangeHandler = () => {};
+  // Get values from form fields and set changes
 
+  // form fields state
+  const [posNr, setPosNr] = useState("");
+  const [posIdx, setPosIdx] = useState("");
+  const [posType, setPosType] = useState("Std.");
+  const [posQty, setPosQty] = useState("");
+  const [posProductText1, setPosProductText1] = useState("");
+  const [posPositionText, setPosPositionText] = useState("");
+  const [posListPrice, setPosListPrice] = useState(0);
+  const [posDiscount, setPosDiscount] = useState(10);
+  const [posMargin, setPosMargin] = useState(10);
+  const [posNetPrice, setPosNetPrice] = useState(50);
+  const [posTotalPrice, setPosTotalPrice] = useState(90);
+  const [posCOS, setPosCOS] = useState(0);
+  const [posBusinessArea, setPosBusinessArea] = useState("");
+  const [posProductClass, setPosProductClass] = useState("");
+  const [posProductGroup, setPosProductGroup] = useState("");
+  const [posProductStatus, setPosProductStatus] = useState(0);
+
+  // Get current product from products array and set states for product info
   useEffect(() => {
-    const current = products.find(
-      (product) => product.productNumber === currentProductNumber
-    );
+    const current =
+      products.find(
+        (product) => product.productNumber === currentProductNumber
+      ) || currentProduct;
 
     setCurrentProduct(current!);
-    console.log(current);
-  }, [currentProductNumber]);
+    setPosProductText1(current?.shortText);
+    setPosPositionText(current?.productName);
+    setPosListPrice(current?.currentListPrice);
+    setPosCOS(current?.costOfSale);
+    setPosBusinessArea(current?.m3BusinessArea);
+    setPosProductClass(current?.m3ProductClass);
+    setPosProductGroup(current?.m3ProductGroup);
+    setPosProductStatus(current?.m3ProductStatus);
+  }, [currentProductNumber, currentProduct]);
 
+  // form fields handlers
+  const onPosNumberChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosNr(event.currentTarget.value);
+  };
+
+  const onPosIndexChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosIdx(event.currentTarget.value);
+  };
+
+  const onPosTypeChangeHandler = (
+    event: React.FormEvent<HTMLSelectElement>
+  ) => {
+    setPosType(event.currentTarget.value);
+  };
+
+  const onPosQuantityChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosQty(event.currentTarget.value);
+  };
+
+  const onPosProductText1ChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosProductText1(event.currentTarget.value);
+  };
+
+  const onPosPositionTextChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosPositionText(event.currentTarget.value);
+  };
+
+  const onPosListPriceChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosListPrice(+event.currentTarget.value);
+  };
+
+  const onPosDiscountChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosDiscount(+event.currentTarget.value);
+  };
+
+  const onPosMarginChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosMargin(+event.currentTarget.value);
+  };
+
+  const onPosNetPriceChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosNetPrice(+event.currentTarget.value);
+  };
+
+  const onPosTotalPriceChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosTotalPrice(+event.currentTarget.value);
+  };
+
+  const onPosCOSChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
+    setPosCOS(+event.currentTarget.value);
+  };
+
+  const onPosBusinessAreaChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosBusinessArea(event.currentTarget.value);
+  };
+
+  const onPosProductClassChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosProductClass(event.currentTarget.value);
+  };
+
+  const onPosProductGroupChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosProductGroup(event.currentTarget.value);
+  };
+
+  const onPosProductStatusChangeHandler = (
+    event: React.FormEvent<HTMLInputElement>
+  ) => {
+    setPosProductStatus(+event.currentTarget.value);
+  };
+
+  // render form for product position
   return (
     <form style={{ display: "flex", flexDirection: "column" }}>
+      {/** _______________________________ */}
+      {/** First Line Of Product Position */}
       <section
         style={{
           display: "flex",
@@ -63,11 +190,22 @@ const ProductPosition = () => {
       >
         <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
           <label htmlFor="posNr">PosNr</label>
-          <input id="posNr" type="text" />
+          <input
+            id="posNr"
+            type="number"
+            value={posNr}
+            onChange={onPosNumberChangeHandler}
+          />
         </div>
         <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
           <label htmlFor="posIndex">PosIdx</label>
-          <input id="posIndex" type="text" required />
+          <input
+            id="posIndex"
+            type="number"
+            required
+            value={posIdx}
+            onChange={onPosIndexChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
@@ -78,10 +216,12 @@ const ProductPosition = () => {
             id="posType"
             style={{ height: "1.6em" }}
             required
+            value={posType}
+            onChange={onPosTypeChangeHandler}
           >
-            <option value="std">Std.</option>
-            <option value="alt">Alt.</option>
-            <option value="txt">Text</option>
+            <option value="Std.">Std.</option>
+            <option value="Alt.">Alt.</option>
+            <option value="Text">Text</option>
           </select>
         </div>
         <div
@@ -109,7 +249,12 @@ const ProductPosition = () => {
         </div>
         <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
           <label htmlFor="posQty">Anzahl</label>
-          <input id="posQty" type="number" />
+          <input
+            id="posQty"
+            type="number"
+            value={posQty}
+            onChange={onPosQuantityChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "35vw" }}
@@ -118,8 +263,8 @@ const ProductPosition = () => {
           <input
             id="productText1"
             type="text"
-            defaultValue={currentProduct && currentProduct.shortText}
-            onChange={onShortTextChangeHandler}
+            value={posProductText1}
+            onChange={onPosProductText1ChangeHandler}
           />
         </div>
         <div
@@ -129,8 +274,8 @@ const ProductPosition = () => {
           <input
             id="positionText"
             type="text"
-            defaultValue={currentProduct && currentProduct.productName}
-            onChange={onShortTextChangeHandler}
+            value={posPositionText}
+            onChange={onPosPositionTextChangeHandler}
           />
         </div>
         <div
@@ -140,64 +285,110 @@ const ProductPosition = () => {
           <input
             id="listPrice"
             type="number"
-            defaultValue={
-              currentProduct &&
-              currentProduct.currentListPrice.toFixed(2).toString()
-            }
-            onChange={onShortTextChangeHandler}
+            value={posListPrice.toString()}
+            onChange={onPosListPriceChangeHandler}
           />
         </div>
       </section>{" "}
+      {/** _______________________________ */}
+      {/** Second Line Of Product Position */}
       <section
-        style={{ display: "flex", width: "70vw", margin: "0 auto 2em auto" }}
+        style={{ display: "flex", width: "90vw", margin: "0 auto 2em auto" }}
       >
-        <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
-          <label htmlFor="discount">Rabatt</label>
-          <input id="discount" type="number" />
+        <div style={{ display: "flex", flexDirection: "column", width: "6vw" }}>
+          <label htmlFor="discount">Rabatt %</label>
+          <input
+            id="discount"
+            type="number"
+            value={posDiscount}
+            onChange={onPosDiscountChangeHandler}
+          />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
-          <label htmlFor="contributionMargin">Marge</label>
-          <input id="contributionMargin" type="number" />
+        <div style={{ display: "flex", flexDirection: "column", width: "6vw" }}>
+          <label htmlFor="contributionMargin">Marge %</label>
+          <input
+            id="contributionMargin"
+            type="number"
+            value={posMargin}
+            onChange={onPosMarginChangeHandler}
+          />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
+        <div
+          style={{ display: "flex", flexDirection: "column", width: "10vw" }}
+        >
           <label htmlFor="netPrice">Netto</label>
-          <input id="netPrice" type="number" />
+          <input
+            id="netPrice"
+            type="number"
+            value={posNetPrice}
+            onChange={onPosNetPriceChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
           <label htmlFor="totalPrice">Ges.-Preis</label>
-          <input id="totalPrice" type="number" />
+          <input
+            id="totalPrice"
+            type="number"
+            value={posTotalPrice}
+            onChange={onPosTotalPriceChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
           <label htmlFor="costOfSale">COS</label>
-          <input id="costOfSale" type="number" />
+          <input
+            id="costOfSale"
+            type="number"
+            value={posCOS.toString()}
+            onChange={onPosCOSChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
           <label htmlFor="m3BusinessArea">m3BusinessArea</label>
-          <input id="m3BusinessArea" type="text" />
+          <input
+            id="m3BusinessArea"
+            type="text"
+            value={posBusinessArea}
+            onChange={onPosBusinessAreaChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
           <label htmlFor="m3ProductClass">m3ProductClass</label>
-          <input id="m3ProductClass" type="text" />
+          <input
+            id="m3ProductClass"
+            type="text"
+            value={posProductClass}
+            onChange={onPosProductClassChangeHandler}
+          />
         </div>
         <div
-          style={{ display: "flex", flexDirection: "column", width: "10vw" }}
+          style={{ display: "flex", flexDirection: "column", width: "15vw" }}
         >
           <label htmlFor="m3ProductGroup">m3ProductGroup</label>
-          <input id="m3ProductGroup" type="text" />
+          <input
+            id="m3ProductGroup"
+            type="text"
+            value={posProductGroup}
+            onChange={onPosProductGroupChangeHandler}
+          />
         </div>
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
           <label htmlFor="m3Status">m3Status</label>
-          <input id="m3Status" type="number" />
+          <input
+            id="m3Status"
+            type="number"
+            value={posProductStatus}
+            onChange={onPosProductStatusChangeHandler}
+          />
         </div>{" "}
       </section>{" "}
     </form>
