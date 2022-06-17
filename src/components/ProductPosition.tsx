@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 
 import { products } from "../data/products";
 
-export interface Product {
+interface Product {
   id: string;
   productName: string;
   productNumber: string;
@@ -15,10 +15,32 @@ export interface Product {
   m3ProductStatus: number;
 }
 
-const ProductPosition = () => {
+export interface ProductPositionToSubmit {
+  productId: string;
+  posNr: number;
+  posIdx: number;
+  productNumber: string;
+  posType: string;
+  posQty: number;
+  posProductText1: string;
+  posPositionText: string;
+  posListPrice: number;
+  posDiscount: number;
+  posMargin: number;
+  posNetPrice: number;
+  posTotalPrice: number;
+  posCOS: number;
+  posBusinessArea: string;
+  posProductClass: string;
+  posProductGroup: string;
+  posProductStatus: number;
+}
+
+const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
   // Handle Product Filtering and set current product
   const [currentProducts, setCurrentProducts] = useState<Product[]>([]);
   const [currentProductNumber, setCurrentProductNumber] = useState("");
+  const [currentProductId, setCurrentProductId] = useState("");
   const [currentProduct, setCurrentProduct] = useState<Product>({
     id: "",
     productName: "",
@@ -31,6 +53,12 @@ const ProductPosition = () => {
     m3ProductGroup: "",
     m3ProductStatus: 0,
   });
+
+  const [posProduct, setPosProduct] = useState<ProductPositionToSubmit | {}>(
+    {}
+  );
+
+  //TEST THE PASSING FUNC
 
   // Get filtered products from products array
   const onProductNumberSearchHandler = (
@@ -71,6 +99,7 @@ const ProductPosition = () => {
       ) || currentProduct;
 
     setCurrentProduct(current!);
+    setCurrentProductId(current?.id);
     setPosProductText1(current?.shortText);
     setPosPositionText(current?.productName);
     setPosListPrice(current?.currentListPrice);
@@ -79,7 +108,52 @@ const ProductPosition = () => {
     setPosProductClass(current?.m3ProductClass);
     setPosProductGroup(current?.m3ProductGroup);
     setPosProductStatus(current?.m3ProductStatus);
-  }, [currentProductNumber, currentProduct]);
+    onChange(posProduct);
+  }, [currentProductNumber, currentProduct, onChange, posProduct]);
+
+  //useMemo to prevent infinite rendering
+
+  useMemo(() => {
+    setPosProduct({
+      productId: currentProductId,
+      productNumber: currentProductNumber,
+      posProductText1: posProductText1,
+      posPositionText: posPositionText,
+      posListPrice: posListPrice,
+      posCOS: posCOS,
+      posBusinessArea: posBusinessArea,
+      posProductClass: posProductClass,
+      posProductGroup: posProductGroup,
+      posProductStatus: posProductStatus,
+      posNr: posNr,
+      posIdx: posIdx,
+      posType: posType,
+      posQty: posQty,
+      posDiscount: posDiscount,
+      posMargin: posMargin,
+      posNetPrice: posNetPrice,
+      posTotalPrice: posTotalPrice,
+    });
+  }, [
+    currentProductId,
+    currentProductNumber,
+    posBusinessArea,
+    posCOS,
+    posDiscount,
+    posIdx,
+    posListPrice,
+    posMargin,
+    posNetPrice,
+    posNr,
+    posPositionText,
+    posProductClass,
+    posProductGroup,
+    posProductStatus,
+    posProductText1,
+    posQty,
+    posTotalPrice,
+    posType,
+  ]);
 
   // form fields handlers
   const onPosNumberChangeHandler = (
@@ -175,6 +249,8 @@ const ProductPosition = () => {
   ) => {
     setPosProductStatus(+event.currentTarget.value);
   };
+
+  // Prepare Position Product For Submit
 
   // render form for product position
   return (

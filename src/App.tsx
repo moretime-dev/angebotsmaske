@@ -1,11 +1,11 @@
 import "./App.css";
 
-import ProductPosition from "./components/ProductPosition";
+import ParentFormContainer from "./components/ParentFormContainer";
 
 function App() {
   return (
     <div className="App">
-      <ProductPosition />
+      <ParentFormContainer />
     </div>
   );
 }
