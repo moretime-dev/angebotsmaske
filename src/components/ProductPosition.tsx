@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 
 import { products } from "../data/products";
 
+// interfaces for the form
 interface Product {
   id: string;
   productName: string;
@@ -108,10 +109,11 @@ const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
     setPosProductClass(current?.m3ProductClass);
     setPosProductGroup(current?.m3ProductGroup);
     setPosProductStatus(current?.m3ProductStatus);
-    onChange(posProduct);
-  }, [currentProductNumber, currentProduct, onChange, posProduct]);
 
-  //useMemo to prevent infinite rendering
+    onChange(posProduct);
+  }, [currentProductNumber, currentProduct, onChange, posProduct, posIdx]);
+
+  //setting position product with useMemo to prevent infinite re-rendering
 
   useMemo(() => {
     setPosProduct({
@@ -125,10 +127,10 @@ const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
       posProductClass: posProductClass,
       posProductGroup: posProductGroup,
       posProductStatus: posProductStatus,
-      posNr: posNr,
-      posIdx: posIdx,
+      posNr: +posNr,
+      posIdx: +posIdx,
       posType: posType,
-      posQty: posQty,
+      posQty: +posQty,
       posDiscount: posDiscount,
       posMargin: posMargin,
       posNetPrice: posNetPrice,
@@ -177,7 +179,11 @@ const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
   const onPosQuantityChangeHandler = (
     event: React.FormEvent<HTMLInputElement>
   ) => {
-    setPosQty(event.currentTarget.value);
+    if (+event.currentTarget.value < 1) {
+      return;
+    } else {
+      setPosQty(event.currentTarget.value);
+    }
   };
 
   const onPosProductText1ChangeHandler = (
@@ -274,7 +280,7 @@ const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
           />
         </div>
         <div style={{ display: "flex", flexDirection: "column", width: "5vw" }}>
-          <label htmlFor="posIndex">PosIdx</label>
+          <label htmlFor="posIndex">PosIdx *</label>
           <input
             id="posIndex"
             type="number"
@@ -286,7 +292,7 @@ const ProductPosition: React.FC<{ onChange: any }> = ({ onChange }) => {
         <div
           style={{ display: "flex", flexDirection: "column", width: "10vw" }}
         >
-          <label htmlFor="posType">Alt./Evt.</label>
+          <label htmlFor="posType">Alt./Evt. *</label>
           <select
             name="posType"
             id="posType"
