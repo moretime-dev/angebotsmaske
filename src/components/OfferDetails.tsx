@@ -5,10 +5,37 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
   const [company1, setCompany1] = useState("");
   const [company2, setCompany2] = useState("");
   const [company3, setCompany3] = useState("");
+  const [companyStreet, setCompanyStreet] = useState("");
+  const [companyZip, setCompanyZip] = useState("");
+  const [companyCity, setCompanyCity] = useState("");
+  const [dateOut, setDateOut] = useState("");
+  const [totalValue, setTotalValue] = useState(0);
+  const [additionalDiscount, setAdditionalDiscount] = useState(0);
+  const [objectDiscount, setObjectDiscount] = useState(0);
+  const [objectDiscountValue, setObjectDiscountValue] = useState(0);
+  const [energyCostSupplement, setEnergyCostSupplement] = useState(0);
+  const [energyCostSupplementValue, setEnergyCostSupplementValue] = useState(0);
+  const [offerNumber, setOfferNumber] = useState("");
+  const [customerOrderNumber, setCustomerOrderNumber] = useState("");
+  const [memo, setMemo] = useState("");
+  const [text, setText] = useState("");
+  const [contributionMargin, setContributionMargin] = useState(0);
+  const [additionalWarranty, setAdditionalWarranty] = useState(0);
+  const [additionalWarrantyCost, setAdditionalWarrantyCost] = useState(0);
+  const [customerDiscount1, setCustomerDiscount1] = useState(2.5);
+  const [customerDiscount2, setCustomerDiscount2] = useState(0);
+  const [factoryDiscountValue, setFactoryDiscountValue] = useState(0);
+  const [prospectSuccess, setProspectSuccess] = useState("");
+  const [cashDiscount, setCashDiscount] = useState(0);
+  const [bonus, setBonus] = useState(0);
+  const [outboundFreight, setOutboundFreight] = useState(0);
+  const [offerPositions, setOfferPositions] = useState(false);
+  const [offerSettings, setOfferSettings] = useState(false);
 
   // state for object to send to parent component
   const [offerDetails, setOfferDetails] = useState({});
 
+  // form fields handlers
   const onCompany1ChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCompany1(e.target.value);
   };
@@ -21,17 +48,223 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
     setCompany3(e.target.value);
   };
 
+  const onCompanyStreetChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCompanyStreet(e.target.value);
+  };
+
+  const onCompanyZipCodeChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCompanyZip(e.target.value);
+  };
+
+  const onCompanyCityChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCompanyCity(e.target.value);
+  };
+
+  const ondateOutChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateOut(e.target.value);
+  };
+
+  const onTotalValueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTotalValue(+e.target.value);
+  };
+
+  const onAdditionalDiscountChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdditionalDiscount(+e.target.value);
+  };
+
+  const onObjectDiscountChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setObjectDiscount(+e.target.value);
+  };
+
+  const onObjectDiscountValueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setObjectDiscountValue(+e.target.value);
+  };
+
+  const onEnergyCostSupplementChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEnergyCostSupplement(+e.target.value);
+  };
+
+  const onEnergyCostSupplementValueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEnergyCostSupplementValue(+e.target.value);
+  };
+
+  const onOfferNumberChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOfferNumber(e.target.value);
+  };
+
+  const onCustomerOrderNumberChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCustomerOrderNumber(e.target.value);
+  };
+
+  const onMemoChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMemo(e.target.value);
+  };
+
+  const onTextChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setText(e.target.value);
+  };
+
+  const onContributionMarginChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setContributionMargin(+e.target.value);
+  };
+
+  const onAdditionalWarrantyChangeHandler = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setAdditionalWarranty(+e.target.value);
+  };
+
+  const onAdditionalWarrantyCostChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setAdditionalWarrantyCost(+e.target.value);
+  };
+
+  const onCustomerDiscount1ChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCustomerDiscount1(+e.target.value);
+  };
+
+  const onCustomerDiscount2ChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCustomerDiscount2(+e.target.value);
+  };
+
+  const onFactoryDiscountValueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setFactoryDiscountValue(+e.target.value);
+  };
+
+  const onProspectSuccessChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProspectSuccess(e.target.value);
+  };
+
+  const onCashDiscountChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setCashDiscount(+e.target.value);
+  };
+
+  const onBonusChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setBonus(+e.target.value);
+  };
+
+  const onOutboundFreightChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOutboundFreight(+e.target.value);
+  };
+
+  const onOfferPositionsChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOfferPositions(e.target.checked);
+  };
+
+  const onOfferSettingsChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setOfferSettings(e.target.checked);
+  };
+
+  // passing the offerDetails object to the parent component
   useEffect(() => {
     onChange(offerDetails);
   }, [offerDetails, onChange]);
 
+  //setting offerDetails with useMemo to prevent infinite re-rendering
   useMemo(() => {
     setOfferDetails({
       company1,
       company2,
       company3,
+      companyStreet,
+      companyZip,
+      companyCity,
+      dateOut,
+      totalValue,
+      additionalDiscount,
+      objectDiscount,
+      objectDiscountValue,
+      energyCostSupplement,
+      energyCostSupplementValue,
+      offerNumber,
+      customerOrderNumber,
+      memo,
+      text,
+      contributionMargin,
+      additionalWarranty,
+      additionalWarrantyCost,
+      customerDiscount1,
+      customerDiscount2,
+      factoryDiscountValue,
+      prospectSuccess,
+      cashDiscount,
+      bonus,
+      outboundFreight,
+      offerPositions,
+      offerSettings,
     });
-  }, [company1, company2, company3]);
+  }, [
+    additionalDiscount,
+    additionalWarranty,
+    additionalWarrantyCost,
+    bonus,
+    cashDiscount,
+    company1,
+    company2,
+    company3,
+    companyCity,
+    companyStreet,
+    companyZip,
+    contributionMargin,
+    customerDiscount1,
+    customerDiscount2,
+    customerOrderNumber,
+    dateOut,
+    energyCostSupplement,
+    energyCostSupplementValue,
+    factoryDiscountValue,
+    memo,
+    objectDiscount,
+    objectDiscountValue,
+    offerNumber,
+    offerPositions,
+    offerSettings,
+    outboundFreight,
+    prospectSuccess,
+    text,
+    totalValue,
+  ]);
 
   return (
     <form
@@ -89,8 +322,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="street"
               type="text"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={companyStreet}
+              onChange={onCompanyStreetChangeHandler}
               required
             />
           </div>
@@ -101,8 +334,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="postalCode"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={companyZip}
+              onChange={onCompanyZipCodeChangeHandler}
               required
             />
           </div>
@@ -113,8 +346,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="city"
               type="text"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={companyCity}
+              onChange={onCompanyCityChangeHandler}
               required
             />
           </div>
@@ -133,8 +366,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="dateOut"
               type="date"
-              value={company1}
-              onChange={onCompany1ChangeHandler}
+              value={dateOut}
+              onChange={ondateOutChangeHandler}
             />{" "}
           </div>
           <div
@@ -144,8 +377,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="totalValue"
               type="number"
-              value={company2}
-              onChange={onCompany2ChangeHandler}
+              value={totalValue}
+              onChange={onTotalValueChangeHandler}
               required
             />{" "}
           </div>
@@ -156,8 +389,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="additionalDiscount"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={additionalDiscount}
+              onChange={onAdditionalDiscountChangeHandler}
               required
             />
           </div>
@@ -168,8 +401,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="objectDiscount"
               type="text"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={objectDiscount}
+              onChange={onObjectDiscountChangeHandler}
               required
             />
           </div>
@@ -180,8 +413,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="objectDiscountValue"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={objectDiscountValue}
+              onChange={onObjectDiscountValueChangeHandler}
               required
             />
           </div>
@@ -192,8 +425,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="energyCostSupplement"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={energyCostSupplement}
+              onChange={onEnergyCostSupplementChangeHandler}
               required
             />
           </div>
@@ -206,8 +439,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="energyCostSupplementValue"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={energyCostSupplementValue}
+              onChange={onEnergyCostSupplementValueChangeHandler}
               required
             />
           </div>
@@ -226,8 +459,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="offerNumber"
               type="number"
-              value={company1}
-              onChange={onCompany1ChangeHandler}
+              value={offerNumber}
+              onChange={onOfferNumberChangeHandler}
               required
             />{" "}
           </div>
@@ -238,29 +471,21 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="customerOrderNumber"
               type="text"
-              value={company2}
-              onChange={onCompany2ChangeHandler}
+              value={customerOrderNumber}
+              onChange={onCustomerOrderNumberChangeHandler}
             />{" "}
           </div>
           <div
             style={{ display: "flex", flexDirection: "column", width: "15vw" }}
           >
             <label htmlFor="memo">Memo</label>
-            <textarea
-              id="memo"
-              value={company3}
-              // onChange={onCompany3ChangeHandler}
-            />
+            <textarea id="memo" value={memo} onChange={onMemoChangeHandler} />
           </div>
           <div
             style={{ display: "flex", flexDirection: "column", width: "15vw" }}
           >
             <label htmlFor="text">Einleitungstext</label>
-            <textarea
-              id="text"
-              value={company3}
-              // onChange={onCompany3ChangeHandler}
-            />
+            <textarea id="text" value={text} onChange={onTextChangeHandler} />
           </div>
         </section>
         {/** _______________________________ */}
@@ -273,8 +498,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="contributionMargin"
               type="number"
-              value={company1}
-              onChange={onCompany1ChangeHandler}
+              value={contributionMargin}
+              onChange={onContributionMarginChangeHandler}
               required
             />{" "}
           </div>
@@ -284,8 +509,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <label htmlFor="additionalWarranty">Garantieverlängerung *</label>
             <select
               id="additionalWarranty"
-              // value={company2}
-              // onChange={onCompany2ChangeHandler}
+              value={additionalWarranty}
+              onChange={onAdditionalWarrantyChangeHandler}
               required
             >
               <option value="0">0</option>
@@ -303,8 +528,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="additionalWarrantyCost"
               type="text"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={additionalWarrantyCost}
+              onChange={onAdditionalWarrantyCostChangeHandler}
               required
             />
           </div>
@@ -315,8 +540,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="customerDiscount1"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={customerDiscount1}
+              onChange={onCustomerDiscount1ChangeHandler}
               required
             />
           </div>
@@ -327,8 +552,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="customerDiscount2"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={customerDiscount2}
+              onChange={onCustomerDiscount2ChangeHandler}
               required
             />
           </div>
@@ -339,8 +564,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="factoryDiscountValue"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={factoryDiscountValue}
+              onChange={onFactoryDiscountValueChangeHandler}
               required
             />
           </div>
@@ -355,8 +580,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="prospectSuccess"
               type="text"
-              value={company1}
-              onChange={onCompany1ChangeHandler}
+              value={prospectSuccess}
+              onChange={onProspectSuccessChangeHandler}
               required
             />{" "}
           </div>
@@ -367,8 +592,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="cashDiscount"
               type="number"
-              value={company2}
-              onChange={onCompany2ChangeHandler}
+              value={cashDiscount}
+              onChange={onCashDiscountChangeHandler}
               required
             />{" "}
           </div>
@@ -379,8 +604,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="Bonus"
               type="number"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={bonus}
+              onChange={onBonusChangeHandler}
               required
             />
           </div>
@@ -391,8 +616,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="outboundFreight"
               type="text"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              value={outboundFreight}
+              onChange={onOutboundFreightChangeHandler}
               required
             />
           </div>
@@ -407,8 +632,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="offerPositions"
               type="checkbox"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              checked={offerPositions}
+              onChange={onOfferPositionsChangeHandler}
               required
             />{" "}
             <label htmlFor="offerPositions">offerPositions *</label>
@@ -423,8 +648,8 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <input
               id="offerSettings"
               type="checkbox"
-              value={company3}
-              onChange={onCompany3ChangeHandler}
+              checked={offerSettings}
+              onChange={onOfferSettingsChangeHandler}
               required
             />{" "}
             <label htmlFor="offerSettings">offerSettings *</label>
