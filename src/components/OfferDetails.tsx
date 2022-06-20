@@ -20,7 +20,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
   const [memo, setMemo] = useState("");
   const [text, setText] = useState("");
   const [contributionMargin, setContributionMargin] = useState(0);
-  const [additionalWarranty, setAdditionalWarranty] = useState(0);
+  const [additionalWarranty, setAdditionalWarranty] = useState("0");
   const [additionalWarrantyCost, setAdditionalWarrantyCost] = useState(0);
   const [customerDiscount1, setCustomerDiscount1] = useState(2.5);
   const [customerDiscount2, setCustomerDiscount2] = useState(0);
@@ -135,7 +135,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
   const onAdditionalWarrantyChangeHandler = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setAdditionalWarranty(+e.target.value);
+    setAdditionalWarranty(e.target.value);
   };
 
   const onAdditionalWarrantyCostChangeHandler = (
@@ -400,7 +400,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <label htmlFor="objectDiscount">Objektrabatt *</label>
             <input
               id="objectDiscount"
-              type="text"
+              type="number"
               value={objectDiscount}
               onChange={onObjectDiscountChangeHandler}
               required
@@ -458,7 +458,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <label htmlFor="offerNumber">Angebotsnummer *</label>
             <input
               id="offerNumber"
-              type="number"
+              type="text"
               value={offerNumber}
               onChange={onOfferNumberChangeHandler}
               required
@@ -527,7 +527,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             </label>
             <input
               id="additionalWarrantyCost"
-              type="text"
+              type="number"
               value={additionalWarrantyCost}
               onChange={onAdditionalWarrantyCostChangeHandler}
               required
@@ -615,7 +615,7 @@ const OfferDetails: React.FC<{ onChange: any }> = ({ onChange }) => {
             <label htmlFor="outboundFreight">Frachtkosten *</label>
             <input
               id="outboundFreight"
-              type="text"
+              type="number"
               value={outboundFreight}
               onChange={onOutboundFreightChangeHandler}
               required
